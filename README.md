@@ -1,16 +1,18 @@
 ## Habib Adnan
 
-**Cloud Solutions Architecture · Google Cloud** · New York
+**Computer Science student, final semester** · New York
 
-I design and build cloud systems end to end: choosing the right managed services, writing the infrastructure as code, wiring up CI/CD, and documenting the trade-offs behind each decision.
+I'm working toward a career in cloud solutions architecture. Right now that means building Pullup, a serverless app on Google Cloud, end to end: choosing the managed services, writing the infrastructure as code, wiring up CI/CD, and documenting the trade-offs behind each decision.
+
+**Currently studying for:** Google Cloud Professional Cloud Architect · AWS Certified Solutions Architect – Associate
 
 <img src="https://skillicons.dev/icons?i=gcp,terraform,docker,githubactions,postgres,firebase,python,ts" height="36" />
 
 ---
 
-### Pullup: serverless, event-driven app on Google Cloud
+### Pullup: serverless, event-driven app on Google Cloud *(in progress)*
 
-A mobile app for spontaneous real-life hangouts. The backend runs on Google Cloud, is fully provisioned with Terraform, and deploys through GitHub Actions using Workload Identity Federation, with no service account keys.
+My main cloud project: a mobile app for spontaneous real-life hangouts. The backend runs on Google Cloud, is fully provisioned with Terraform, and deploys through GitHub Actions using Workload Identity Federation, with no service account keys.
 
 ```mermaid
 flowchart LR
