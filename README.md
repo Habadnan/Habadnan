@@ -41,9 +41,9 @@ flowchart LR
 
 </details>
 
-### CloudPulse: network monitoring platform *(in progress)*
+### CloudPulse: network monitoring platform *(in design)*
 
-A Python agent reports latency, packet loss, and DNS health to a Cloud Run API backed by Firestore, with a Next.js dashboard. Next up: Pub/Sub workers, Terraform, CI/CD, reliability testing, and a cost analysis.
+Planned architecture: a Python agent reporting latency, packet loss, and DNS health to a Cloud Run API backed by Firestore, with a Next.js dashboard. Later phases add Pub/Sub workers, Terraform, CI/CD, reliability testing, and a cost analysis.
 
 ---
 
