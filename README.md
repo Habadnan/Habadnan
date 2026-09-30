@@ -12,17 +12,19 @@ I'm working toward a career in cloud solutions architecture. Right now that mean
 
 ### Pullup: serverless, event-driven app on Google Cloud *(in progress)*
 
-My main cloud project: a mobile app for spontaneous real-life hangouts. The backend runs on Google Cloud, is fully provisioned with Terraform, and deploys through GitHub Actions using Workload Identity Federation, with no service account keys.
+My main cloud project: a mobile app for spontaneous real-life hangouts. The whole Google Cloud environment is provisioned with Terraform, with least-privilege IAM and keyless GitHub Actions deploys through Workload Identity Federation.
+
+**Working today:** the Expo app, a Fastify API on Cloud Run, and Cloud SQL with PostGIS for "nearby" search. **Next:** the event-driven pieces shown dashed below.
 
 ```mermaid
 flowchart LR
     App["Expo app"] -->|"HTTPS + ID token"| API["Cloud Run API"]
     API --> SQL[("Cloud SQL<br/>Postgres + PostGIS")]
-    API --> GCS["Cloud Storage<br/>private, signed URLs"]
-    GCS --> Vision["Cloud Vision<br/>moderation"]
-    API --> Tasks["Cloud Tasks<br/>timers"]
-    API --> PS["Pub/Sub"]
-    PS --> Worker["Notify worker"] --> FCM["Firebase Cloud Messaging"]
+    API -.-> GCS["Cloud Storage<br/>signed-URL uploads"]
+    GCS -.-> Vision["Cloud Vision<br/>moderation"]
+    API -.-> Tasks["Cloud Tasks<br/>timers"]
+    API -.-> PS["Pub/Sub"]
+    PS -.-> Worker["Notify worker"] -.-> FCM["Firebase Cloud Messaging"]
     PS -.-> DLQ["Dead-letter topic"]
 ```
 
@@ -34,9 +36,9 @@ flowchart LR
 |---|---|
 | Cloud Run over GKE or Compute Engine | Spiky traffic, near zero overnight. Scale-to-zero keeps cost near $0 with no cluster to run. |
 | Cloud SQL + PostGIS over Firestore | "Hangouts within 5 km that haven't ended" is a geo query. PostGIS handles it with a GiST index. |
-| Pub/Sub between API and notifications | The API stays fast when push delivery is slow. Retries and a dead-letter topic absorb failures. |
-| Cloud Tasks for expiry and reminders | One task per hangout, fired at the exact time, instead of a cron job scanning the table. |
-| Private bucket + signed URLs | Uploads go straight to storage, never through the API, and nothing is publicly listable. |
+| Pub/Sub between API and notifications *(planned)* | The API stays fast when push delivery is slow. Retries and a dead-letter topic absorb failures. |
+| Cloud Tasks for expiry and reminders *(planned)* | One task per hangout, fired at the exact time, instead of a cron job scanning the table. |
+| Private bucket + signed URLs *(planned)* | Uploads go straight to storage, never through the API, and nothing is publicly listable. |
 | One service account per workload | Least privilege: the API can't send pushes, the worker can't read photos. |
 | `max_instance_count = 5` | Caps spend and keeps Cloud SQL connections under the tier's limit. |
 | Monitoring and billing budget in Terraform | Uptime checks, alerts, and a budget ship with the infrastructure, not after it. |
@@ -62,4 +64,3 @@ Planned architecture: a Python agent reporting latency, packet loss, and DNS hea
 
 - **[CodePilot](https://github.com/Habadnan/CodePilot)**: AI codebase onboarding with summaries, dependency graphs, and RAG-powered Q&A. Containerized with Docker.
 - **[Nimbus](https://github.com/Habadnan/nimbus-lang)**: a programming language from scratch, with a lexer, parser, bytecode compiler, stack VM, and built-in HTTP servers.
-- **[RateMyRams](https://github.com/Habadnan/RateMyRams)**: professor reviews and course insights for Farmingdale State students.
